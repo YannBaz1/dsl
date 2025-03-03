@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iDM_DSL:BooleanExpr xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:iDM_DSL="http://www.example.org/iDM_DSL" xsi:schemaLocation="http://www.example.org/iDM_DSL iDM_DSL.ecore" operator="GREATER">
+  <right xsi:type="iDM_DSL:IntExpression" href="IntExpression.xmi#/"/>
+  <left xsi:type="iDM_DSL:IntExpression" href="IntExpression1.xmi#/"/>
+</iDM_DSL:BooleanExpr>
