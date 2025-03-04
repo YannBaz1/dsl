@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iDM_DSL:Program
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:iDM_DSL="http://www.example.org/iDM_DSL"
+    xsi:schemaLocation="http://www.example.org/iDM_DSL DSL_IDM.ecore">
+  <instruction
+      xsi:type="iDM_DSL:VariableAssignement"
+      variabledeclaration="//@instruction.1">
+    <expression
+        xsi:type="iDM_DSL:IntExpression"/>
+  </instruction>
+  <instruction
+      xsi:type="iDM_DSL:VariableDeclaration"
+      name="count"
+      type="number"/>
+</iDM_DSL:Program>

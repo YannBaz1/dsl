@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+ <?xml version="1.0" encoding="UTF-8"?>
 <iDM_DSL:Program
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
@@ -18,21 +18,7 @@
               unit="mm"/>
         </function>
       </instruction>
-      <instruction
-          xsi:type="iDM_DSL:VariableDeclaration">
-        <variable
-            name="count"
-            type="number"/>
-      </instruction>
-      <instruction
-          xsi:type="iDM_DSL:VariableAssignement">
-        <variable
-            name="count"
-            type="number">
-          <expression
-              xsi:type="iDM_DSL:IntExpression"/>
-        </variable>
-      </instruction>
+     
       <instruction
           xsi:type="iDM_DSL:Loop">
         <instruction
@@ -50,6 +36,7 @@
               value="5"/>
         </booleanexpr>
       </instruction>
+     
     </function>
   </instruction>
   <instruction
@@ -65,4 +52,4 @@
           angleValue="90.0"/>
     </function>
   </instruction>
-</iDM_DSL:Program>
+</iDM_DSL:Program> 
