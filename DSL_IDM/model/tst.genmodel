@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/tst/src-gen" creationIcons="false" editDirectory="/tst.edit/src-gen"
+    editorDirectory="/tst.editor/src-gen" modelPluginID="tst" modelName="Tst" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="21.0"
+    copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>tst.ecore</foreignModel>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="Tst" disposableProviderFactory="true" ecorePackage="tst.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="tst.ecore#//Direction">
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//Direction/Front"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//Direction/Back"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//Direction/Right"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//Direction/Left"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="tst.ecore#//AngleUnit">
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//AngleUnit/Degre"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//AngleUnit/Radian"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="tst.ecore#//Units">
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//Units/MM_S"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//Units/CM_S"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//Units/M_S"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="tst.ecore#//Operator">
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//Operator/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//Operator/SUB"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//Operator/MUL"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//Operator/DIV"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="tst.ecore#//BooleanOperator">
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//BooleanOperator/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//BooleanOperator/OR"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//BooleanOperator/NOT"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//BooleanOperator/EQUALS"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//BooleanOperator/LESS"/>
+      <genEnumLiterals ecoreEnumLiteral="tst.ecore#//BooleanOperator/GREATER"/>
+    </genEnums>
+    <genClasses ecoreClass="tst.ecore#//Movement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Movement/direction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tst.ecore#//Movement/speed"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//Variable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Variable/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Variable/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//Variable/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//Function">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Function/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//Function/instruction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//Function/returntype"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//Function/parameter"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//Rotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Rotation/angleUnit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Rotation/angleValue"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//TimeSensors">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//TimeSensors/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//TimeSensors/unit"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="tst.ecore#//ControlStruct"/>
+    <genClasses image="false" ecoreClass="tst.ecore#//Expression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//Expression/newvariable"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//ArithmeticExpr">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//ArithmeticExpr/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//ArithmeticExpr/numberexpr"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//BooleanExpr">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//BooleanExpr/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//BooleanExpr/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//Loop">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//Loop/instruction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//Loop/booleanexpr"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//Condition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tst.ecore#//Condition/then"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tst.ecore#//Condition/else"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//Condition/booleanexpr"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="tst.ecore#//Instruction"/>
+    <genClasses ecoreClass="tst.ecore#//Speed">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Speed/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Speed/unit"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//IntExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//IntExpression/value"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//Boolean">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Boolean/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="tst.ecore#//NumberExpr"/>
+    <genClasses ecoreClass="tst.ecore#//VariableAssignement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//VariableAssignement/variable"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//ReturnType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//ReturnType/returnType"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//Parameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Parameter/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Parameter/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Parameter/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//Parameter/unit"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//Program">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//Program/instruction"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//VariableDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//VariableDeclaration/variable"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//FunctionDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//FunctionDeclaration/function"/>
+    </genClasses>
+    <genClasses ecoreClass="tst.ecore#//FunctionCall">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tst.ecore#//FunctionCall/function"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="tst.ecore#//SensorsAb"/>
+    <genClasses ecoreClass="tst.ecore#//DistanceSensor">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//DistanceSensor/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tst.ecore#//DistanceSensor/unit"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
