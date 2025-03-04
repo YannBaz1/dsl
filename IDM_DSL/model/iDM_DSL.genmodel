@@ -45,6 +45,7 @@
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="iDM_DSL.ecore#//DistanceUnit">
       <genEnumLiterals ecoreEnumLiteral="iDM_DSL.ecore#//DistanceUnit/CM"/>
       <genEnumLiterals ecoreEnumLiteral="iDM_DSL.ecore#//DistanceUnit/M"/>
+      <genEnumLiterals ecoreEnumLiteral="iDM_DSL.ecore#//DistanceUnit/MM"/>
     </genEnums>
     <genClasses ecoreClass="iDM_DSL.ecore#//Movement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute iDM_DSL.ecore#//Movement/direction"/>
@@ -52,13 +53,14 @@
     </genClasses>
     <genClasses ecoreClass="iDM_DSL.ecore#//Variable">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute iDM_DSL.ecore#//Variable/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//Variable/expression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute iDM_DSL.ecore#//Variable/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//Variable/expression"/>
     </genClasses>
     <genClasses ecoreClass="iDM_DSL.ecore#//Function">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute iDM_DSL.ecore#//Function/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//Function/parameters"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//Function/instruction"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//Function/returntype"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//Function/parameter"/>
     </genClasses>
     <genClasses ecoreClass="iDM_DSL.ecore#//Rotation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute iDM_DSL.ecore#//Rotation/angleUnit"/>
@@ -70,7 +72,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute iDM_DSL.ecore#//Sensors/unit"/>
     </genClasses>
     <genClasses ecoreClass="iDM_DSL.ecore#//ControlStruct"/>
-    <genClasses ecoreClass="iDM_DSL.ecore#//Expression"/>
+    <genClasses ecoreClass="iDM_DSL.ecore#//Expression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//Expression/variable"/>
+    </genClasses>
     <genClasses ecoreClass="iDM_DSL.ecore#//ArithmeticExpr">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//ArithmeticExpr/right"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute iDM_DSL.ecore#//ArithmeticExpr/operator"/>
@@ -103,8 +107,8 @@
     </genClasses>
     <genClasses ecoreClass="iDM_DSL.ecore#//NumberExpr"/>
     <genClasses ecoreClass="iDM_DSL.ecore#//VariableAssignement">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//VariableAssignement/variable"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//VariableAssignement/expression"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//VariableAssignement/variable"/>
     </genClasses>
     <genClasses ecoreClass="iDM_DSL.ecore#//ReturnType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute iDM_DSL.ecore#//ReturnType/returnType"/>
@@ -112,9 +116,20 @@
     <genClasses ecoreClass="iDM_DSL.ecore#//Parameter">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute iDM_DSL.ecore#//Parameter/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute iDM_DSL.ecore#//Parameter/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute iDM_DSL.ecore#//Parameter/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute iDM_DSL.ecore#//Parameter/unit"/>
     </genClasses>
     <genClasses ecoreClass="iDM_DSL.ecore#//Program">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//Program/instruction"/>
+    </genClasses>
+    <genClasses ecoreClass="iDM_DSL.ecore#//VariableDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//VariableDeclaration/variable"/>
+    </genClasses>
+    <genClasses ecoreClass="iDM_DSL.ecore#//FunctionDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//FunctionDeclaration/function"/>
+    </genClasses>
+    <genClasses ecoreClass="iDM_DSL.ecore#//FunctionCall">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference iDM_DSL.ecore#//FunctionCall/function"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
