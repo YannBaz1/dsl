@@ -1,5 +1,5 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import type { RobmlAstType, ArithmeticExpr, BooleanExpr, VariableDeclaration } from './generated/ast.ts';
+import type { RobmlAstType, ArithmeticExpr, BooleanExpr, VariableDeclaration } from './generated/ast.js';
 import { RobmlServices } from './robml-module.js';
 
 /**
@@ -10,7 +10,7 @@ export function registerValidationChecks(services: RobmlServices) {
     const validator = services.validation.RobmlValidator;
     const checks: ValidationChecks<RobmlAstType> = {
         ArithmeticExpr: validator.checkArithmeticExpr,
-        BooleanExpr: validator.checkBooleanExprOperands,
+        BooleanExpr: validator.checkBooleanExpr,
         VariableDeclaration: validator.checkVariableDeclaration
     };
     registry.register(checks, validator);
@@ -20,41 +20,41 @@ export function registerValidationChecks(services: RobmlServices) {
  * Implementation of custom validations.
  */
 export class RobmlValidator {
+    
 
     /**
-     * Vérifie qu'une expression arithmétique a bien un opérateur si elle a des opérandes.
+     * Vérifie qu'une expression arithmétique a bien un opérateur et deux opérandes valides.
      */
-    checkArithmeticExpr(expr: ArithmeticExpr, accept: ValidationAcceptor): void {
-        if ((expr.left || expr.right) && !expr.operator) {
-            accept('error', 'ArithmeticExpr must have an operator if left or right is defined.', {
-                node: expr,
-                property: 'operator'
-            });
-        }
-    }
-
-    /**
-     * Vérifie que les expressions booléennes ont des opérandes valides.
-     */
-    checkBooleanExprOperands(expr: BooleanExpr, accept: ValidationAcceptor): void {
+     checkArithmeticExpr(expr: ArithmeticExpr, accept: ValidationAcceptor): void {
         if (!expr.operator) {
-            accept('error', 'BooleanExpr must have an operator.', { node: expr, property: 'operator' });
+            accept('error', 'Une expression arithmétique doit avoir un opérateur.', { node: expr });
         }
-        if ((expr.left && expr.right) && (expr.operator === 'NOT')) {
-            accept('error', 'BooleanExpr with NOT operator should have only one operand.', {
-                node: expr,
-                property: 'operator'
-            });
+        if (!expr.left || !expr.right) {
+            accept('error', 'Une expression arithmétique doit avoir deux opérandes (left et right).', { node: expr });
         }
     }
 
     /**
-     * Vérifie que les déclarations de variables ont un type défini.
+     * Vérifie que les expressions booléennes ont bien un opérateur et des expressions valides.
      */
-    checkVariableDeclaration(variable: VariableDeclaration, accept: ValidationAcceptor): void {
-        if (!variable.type) {
-            accept('error', 'VariableDeclaration must have a type.', { node: variable, property: 'type' });
+     checkBooleanExpr(expr: BooleanExpr, accept: ValidationAcceptor): void {
+        if (!expr.operator) {
+            accept('error', 'Une expression booléenne doit avoir un opérateur.', { node: expr });
+        }
+        if (!expr.left || !expr.right) {
+            accept('error', 'Une expression booléenne doit avoir deux opérandes (left et right).', { node: expr });
         }
     }
 
+    /**
+     * Vérifie qu'une déclaration de variable a bien un nom et un type.
+     */
+     checkVariableDeclaration(decl: VariableDeclaration, accept: ValidationAcceptor): void {
+        if (!decl.name) {
+            accept('error', 'Une variable doit avoir un nom.', { node: decl });
+        }
+        if (!decl.type) {
+            accept('error', 'Une variable doit avoir un type.', { node: decl });
+        }
+    }
 }
