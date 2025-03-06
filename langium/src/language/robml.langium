@@ -5,12 +5,16 @@ import 'DSL_IDM-types'
 
 entry EntryPoint returns Program:
     {Program} 'let' 'void' 'main' '(' ')' '{' 
-        ( instruction+=Instruction )*
+        (instruction+=Instruction )*
     '}'
 ;
 
 Instruction returns Instruction:
-    Movement | Rotation | Loop | Condition | VariableAssignement | VariableDeclaration | FunctionDeclaration | FunctionCall
+    Movement | Rotation | ControlStruct | VariableAssignement | VariableDeclaration | FunctionDeclaration | FunctionCall
+;
+
+ControlStruct returns ControlStruct:
+    Loop | Condition
 ;
 
 Expression returns Expression:
@@ -31,12 +35,12 @@ Rotation returns Rotation:
 
 Loop returns Loop:
     {Loop} 'loop' '(' booleanexpr=BooleanExpr ')' '{'
-        instruction+=Instruction ( instruction+=Instruction )*
+       (instruction+=Instruction )?
     '}'
 ;
 
 Condition returns Condition:
-    {Condition} 'If' '{' ('then' then=[Instruction:EString] )? ('else' else=[Instruction:EString] )? ('booleanexpr' '{' booleanexpr+=BooleanExpr  ("," booleanexpr+=BooleanExpr  )* '}' )? '}'
+    {Condition} 'If' (booleanexpr+=BooleanExpr  ("," booleanexpr+=BooleanExpr  )* )? '{' ('then' then=[Instruction:EString] )? ('else' else=[Instruction:EString] )?  '}'
 ;
 
 VariableAssignement returns VariableAssignement:
@@ -44,17 +48,16 @@ VariableAssignement returns VariableAssignement:
 ;
 
 VariableDeclaration returns VariableDeclaration:
-    {VariableDeclaration} ('let' name=EString type=EString?  '=' expression+=Expression  ("," expression+=Expression  )*)?
+    {VariableDeclaration} ('let' name=EString type=EString?  '=' expression+=Expression  ("," expression+=Expression )*)?
 ;
 
 FunctionDeclaration returns FunctionDeclaration:
-    {FunctionDeclaration}  name=EString  '{' ('instruction' '{' instruction+=Instruction  ("," instruction+=Instruction  )* '}' )? ('returntype' returntype=ReturnType  )? '}'
+    {FunctionDeclaration} ( returntype=ReturnType )?  name=EString '{' (instruction+=Instruction)* '}'
 ;
 
 FunctionCall returns FunctionCall:
     {FunctionCall} 'call' EString '(' (parameter+=Parameter)? ')'
 ;
-
 
 Direction returns Direction:
     Direction_Front | Direction_Back | Direction_Right | Direction_Left
