@@ -1,70 +1,151 @@
-grammar Robml
+grammar MyDsl
 import 'Terminals'
 import 'DSL_IDM-types'
 
-entry ArithmeticExpr returns ArithmeticExpr:
-    {ArithmeticExpr} 'ArithmeticExpr' '{' ('operator' operator=Operator  )? ('newvariable' '{' newvariable+=VariableDeclaration  ("," newvariable+=VariableDeclaration  )* '}' )? ('left' left=NumberExpr  )? ('right' right=NumberExpr  )? '}'  
+
+entry EntryPoint returns Program:
+    {Program} 'let' 'void' 'main' '(' ')' '{' 
+        ( instruction+=Instruction )*
+    '}'
 ;
 
-NumberExpr returns NumberExpr:
-    TimeSensors | ArithmeticExpr | IntExpression | DistanceSensor 
+Instruction returns Instruction:
+    Movement | Rotation | Loop | Condition | VariableAssignement | VariableDeclaration | FunctionDeclaration | FunctionCall
 ;
 
 Expression returns Expression:
-    TimeSensors | ArithmeticExpr | BooleanExpr | IntExpression | Boolean | DistanceSensor 
+    TimeSensors | ArithmeticExpr | BooleanExpr | IntExpression | Boolean | DistanceSensor
+;
+
+NumberExpr returns NumberExpr:
+    TimeSensors | ArithmeticExpr | IntExpression | DistanceSensor
+;
+
+Movement returns Movement:
+    {Movement} 'Movement' (direction=Direction)? ('dist' Distance=EInt)? ('in' unit=EString)?
+;
+
+Rotation returns Rotation:
+    {Rotation} 'Rotation'  EInt ('angleUnit' angleUnit=AngleUnit)?
+;
+
+Loop returns Loop:
+    {Loop} 'loop' '(' booleanexpr=BooleanExpr ')' '{'
+        instruction+=Instruction ( instruction+=Instruction )*
+    '}'
+;
+
+Condition returns Condition:
+    {Condition} 'If' '{' ('then' then=[Instruction:EString] )? ('else' else=[Instruction:EString] )? ('booleanexpr' '{' booleanexpr+=BooleanExpr  ("," booleanexpr+=BooleanExpr  )* '}' )? '}'
+;
+
+VariableAssignement returns VariableAssignement:
+    {VariableAssignement} (variabledeclaration=[VariableDeclaration:EString] '=' expression+=Expression  ("," expression+=Expression  )* )?
 ;
 
 VariableDeclaration returns VariableDeclaration:
-    {VariableDeclaration} 'VariableDeclaration' name=EString  '{' ('type' ^type=EString  )? ('expression' '{' expression+=Expression  ("," expression+=Expression  )* '}' )? '}'  
+    {VariableDeclaration} ('let' name=EString type=EString?  '=' expression+=Expression  ("," expression+=Expression  )*)?
 ;
 
-Operator returns Operator:
-    Operator_ADD | Operator_SUB | Operator_MUL | Operator_DIV
+FunctionDeclaration returns FunctionDeclaration:
+    {FunctionDeclaration}  name=EString  '{' ('instruction' '{' instruction+=Instruction  ("," instruction+=Instruction  )* '}' )? ('returntype' returntype=ReturnType  )? '}'
 ;
-Operator_ADD returns Operator_ADD: 'ADD' ;
-Operator_SUB returns Operator_SUB: 'SUB' ;
-Operator_MUL returns Operator_MUL: 'MUL' ;
-Operator_DIV returns Operator_DIV: 'DIV' ;
+
+FunctionCall returns FunctionCall:
+    {FunctionCall} 'call' EString '(' (parameter+=Parameter)? ')'
+;
+
+
+Direction returns Direction:
+    Direction_Front | Direction_Back | Direction_Right | Direction_Left
+;
+Direction_Front returns Direction_Front:
+    'Front';
+Direction_Back returns Direction_Back:
+    'Back';
+Direction_Right returns Direction_Right:
+    'Right';
+Direction_Left returns Direction_Left:
+    'Left';
+
+EInt returns number:
+    '-'? INT
+;
 
 EString returns string:
-    STRING | ID 
+    STRING | ID
 ;
 
-TimeSensors returns TimeSensors:
-    {TimeSensors} 'TimeSensors' '{' ('unit' unit=EString  )? ('newvariable' '{' newvariable+=VariableDeclaration  ("," newvariable+=VariableDeclaration  )* '}' )? '}'  
+AngleUnit returns AngleUnit:
+    AngleUnit_Degre | AngleUnit_Radian
 ;
+AngleUnit_Degre returns AngleUnit_Degre:
+    'Degre';
+AngleUnit_Radian returns AngleUnit_Radian:
+    'Radian';
 
 BooleanExpr returns BooleanExpr:
-    {BooleanExpr} 'BooleanExpr' '{' ('operator' operator=BooleanOperator  )? ('newvariable' '{' newvariable+=VariableDeclaration  ("," newvariable+=VariableDeclaration  )* '}' )? ('right' right=Expression  )? ('left' left=Expression  )? '}'  
-;
-
-IntExpression returns IntExpression:
-    {IntExpression} 'IntExpression' '{' ('value' value=EInt  )? ('newvariable' '{' newvariable+=VariableDeclaration  ("," newvariable+=VariableDeclaration  )* '}' )? '}'  
-;
-
-Boolean returns Boolean:
-    {Boolean} (value?='value' )? 'Boolean' '{' ('newvariable' '{' newvariable+=VariableDeclaration  ("," newvariable+=VariableDeclaration  )* '}' )? '}'  
-;
-
-DistanceSensor returns DistanceSensor:
-    {DistanceSensor} 'DistanceSensor' '{' ('unit' unit=EString  )? ('newvariable' '{' newvariable+=VariableDeclaration  ("," newvariable+=VariableDeclaration  )* '}' )? '}'  
+    {BooleanExpr} 'cond' ( left=Expression )? ( operator=BooleanOperator  )?  ( right=Expression  )?
 ;
 
 BooleanOperator returns BooleanOperator:
     BooleanOperator_AND | BooleanOperator_OR | BooleanOperator_NOT | BooleanOperator_EQUALS | BooleanOperator_LESS | BooleanOperator_GREATER
 ;
-BooleanOperator_AND returns BooleanOperator_AND: 'AND' ;
-BooleanOperator_OR returns BooleanOperator_OR: 'OR' ;
-BooleanOperator_NOT returns BooleanOperator_NOT: 'NOT' ;
-BooleanOperator_EQUALS returns BooleanOperator_EQUALS: 'EQUALS' ;
-BooleanOperator_LESS returns BooleanOperator_LESS: 'LESS' ;
-BooleanOperator_GREATER returns BooleanOperator_GREATER: 'GREATER' ;
+BooleanOperator_AND returns BooleanOperator_AND:
+    'AND';
+BooleanOperator_OR returns BooleanOperator_OR:
+    'OR';
+BooleanOperator_NOT returns BooleanOperator_NOT:
+    'NOT';
+BooleanOperator_EQUALS returns BooleanOperator_EQUALS:
+    'EQUALS';
+BooleanOperator_LESS returns BooleanOperator_LESS:
+    'LESS';
+BooleanOperator_GREATER returns BooleanOperator_GREATER:
+    'GREATER';
 
-EInt returns number:
-    '-'? INT  
+TimeSensors returns TimeSensors:
+    {TimeSensors} 'TimeSensors' '{' ('unit' unit=EString  )? '}'
 ;
+
+
+ArithmeticExpr returns ArithmeticExpr:
+    {ArithmeticExpr} '{' ( left=NumberExpr  )? (operator=Operator  )? ( right=NumberExpr  )? '}'
+;
+
+
+IntExpression returns IntExpression:
+    {IntExpression} ( value=EInt )?
+;
+
+Boolean returns Boolean:
+    {Boolean} (value=EBoolean )?
+;
+
+DistanceSensor returns DistanceSensor:
+    {DistanceSensor} 'DistanceSensor' '{' ('unit' unit=EString  )?'}'
+;
+
+Operator returns Operator:
+    Operator_ADD | Operator_SUB | Operator_MUL | Operator_DIV
+;
+Operator_ADD returns Operator_ADD:
+    'ADD';
+Operator_SUB returns Operator_SUB:
+    'SUB';
+Operator_MUL returns Operator_MUL:
+    'MUL';
+Operator_DIV returns Operator_DIV:
+    'DIV';
 
 EBoolean returns boolean:
-    'true' | 'false' 
+    'true' | 'false'
 ;
 
+ReturnType returns ReturnType:
+    {ReturnType} 'ReturnType' '{' ('returnType' returnType=EString  )? '}'
+;
+
+Parameter returns Parameter:
+    {Parameter}  (name=EString)?   ('type' ^type=EString  )? (value=EInt)? ('in'unit=EString)?
+;

@@ -1,7 +1,7 @@
-import type { Model } from '../language/generated/ast.js';
+import type { Program } from '../language/generated/ast.js';
 import chalk from 'chalk';
 import { Command } from 'commander';
-import { RobmlLanguageMetaData } from '../language/generated/module.js';
+import { MyDslLanguageMetaData } from '../language/generated/module.js';
 import { createRobmlServices } from '../language/robml-module.js';
 import { extractAstNode } from './cli-util.js';
 import { generateJavaScript } from './generator.js';
@@ -16,7 +16,7 @@ const packageContent = await fs.readFile(packagePath, 'utf-8');
 
 export const generateAction = async (fileName: string, opts: GenerateOptions): Promise<void> => {
     const services = createRobmlServices(NodeFileSystem).Robml;
-    const model = await extractAstNode<Model>(fileName, services);
+    const model = await extractAstNode<Program>(fileName, services);
     const generatedFilePath = generateJavaScript(model, fileName, opts.destination);
     console.log(chalk.green(`JavaScript code generated successfully: ${generatedFilePath}`));
 };
@@ -25,12 +25,12 @@ export type GenerateOptions = {
     destination?: string;
 }
 
-export default function(): void {
+export default function (): void {
     const program = new Command();
 
     program.version(JSON.parse(packageContent).version);
 
-    const fileExtensions = RobmlLanguageMetaData.fileExtensions.join(', ');
+    const fileExtensions = MyDslLanguageMetaData.fileExtensions.join(', ');
     program
         .command('generate')
         .argument('<file>', `source file (possible file extensions: ${fileExtensions})`)

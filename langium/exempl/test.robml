@@ -1,11 +1,9 @@
-let void entry () {
-    setSpeed(200 mm) // distance per second (here 200mm/s)
-    var number time = getTimestamp()
-    loop time < 60000
-    {
-        var number dist = getDistance() in cm
-        Forward dist - 25 in cm
-        Clock 90
-        time = getTimestamp()
+let void main () { 
+    call setSpeed(200 in mm) 
+    let number time = call getTimestamp() 
+    loop (cond 10 LESS 10){ 
+        let v = 10 
+        Rotation 90 angleUnit Degre
+        let c = 1
     }
 }

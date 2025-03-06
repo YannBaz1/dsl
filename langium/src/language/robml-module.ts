@@ -1,14 +1,14 @@
 import { type Module, inject } from 'langium';
 import { createDefaultModule, createDefaultSharedModule, type DefaultSharedModuleContext, type LangiumServices, type LangiumSharedServices, type PartialLangiumServices } from 'langium/lsp';
-import { RobmlGeneratedModule, RobmlGeneratedSharedModule } from './generated/module.js';
-import { RobmlValidator, registerValidationChecks } from './robml-validator.js';
+import { MyDslGeneratedModule, RobmlGeneratedSharedModule } from './generated/module.js';
+import { MyDslValidator, registerValidationChecks } from './robml-validator.js';
 
 /**
  * Declaration of custom services - add your own service classes here.
  */
 export type RobmlAddedServices = {
     validation: {
-        RobmlValidator: RobmlValidator
+        RobmlValidator: MyDslValidator
     }
 }
 
@@ -25,7 +25,7 @@ export type RobmlServices = LangiumServices & RobmlAddedServices
  */
 export const RobmlModule: Module<RobmlServices, PartialLangiumServices & RobmlAddedServices> = {
     validation: {
-        RobmlValidator: () => new RobmlValidator()
+        RobmlValidator: () => new MyDslValidator()
     }
 };
 
@@ -54,7 +54,7 @@ export function createRobmlServices(context: DefaultSharedModuleContext): {
     );
     const Robml = inject(
         createDefaultModule({ shared }),
-        RobmlGeneratedModule,
+        MyDslGeneratedModule,
         RobmlModule
     );
     shared.ServiceRegistry.register(Robml);
