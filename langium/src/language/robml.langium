@@ -10,11 +10,7 @@ entry EntryPoint returns Program:
 ;
 
 Instruction returns Instruction:
-    Movement | Rotation | ControlStruct | VariableAssignement | VariableDeclaration | FunctionDeclaration | FunctionCall
-;
-
-ControlStruct returns ControlStruct:
-    Loop | Condition
+    Movement | Rotation | Loop | Condition | VariableAssignement | VariableDeclaration | FunctionDeclaration | FunctionCall
 ;
 
 Expression returns Expression:
@@ -35,12 +31,12 @@ Rotation returns Rotation:
 
 Loop returns Loop:
     {Loop} 'loop' '(' booleanexpr=BooleanExpr ')' '{'
-       (instruction+=Instruction )?
+       (instruction+=Instruction)? 
     '}'
 ;
 
 Condition returns Condition:
-    {Condition} 'If' (booleanexpr+=BooleanExpr  ("," booleanexpr+=BooleanExpr  )* )? '{' ('then' then=[Instruction:EString] )? ('else' else=[Instruction:EString] )?  '}'
+    {Condition} 'If' '(' (booleanexpr+=BooleanExpr) ')' '{' ('then' (then+=Instruction)* )? ('else' (else+=Instruction)*)?  '}'
 ;
 
 VariableAssignement returns VariableAssignement:

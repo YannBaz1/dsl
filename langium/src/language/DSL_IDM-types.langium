@@ -53,12 +53,9 @@ interface Rotation extends Instruction {
 	angleUnit?: AngleUnit
 }
 
-interface Loop extends ControlStruct {
+interface Loop extends Instruction {
 	instruction: Instruction[]
-	booleanexpr?: BooleanExpr
-}
-
-interface ControlStruct extends Instruction {
+	booleanexpr: BooleanExpr
 }
 
 interface BooleanExpr extends Expression {
@@ -67,9 +64,9 @@ interface BooleanExpr extends Expression {
 	left?: Expression
 }
 
-interface Condition extends ControlStruct {
-	then?: @Instruction
-	else?: @Instruction
+interface Condition extends Instruction {
+	then?: Instruction[]
+	else?: Instruction[]
 	booleanexpr: BooleanExpr[]
 }
 
@@ -124,4 +121,3 @@ interface Boolean extends Expression {
 interface DistanceSensor extends SensorsAb {
 	unit?: string
 }
-
